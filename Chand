@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hacking Search Engine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+    background:black;
+    color:#00ff00;
+    font-family: monospace;
+    text-align:center;
+}
+
+h1 {
+    margin-top:40px;
+    font-size:32px;
+    text-shadow:0 0 10px #00ff00;
+}
+
+input {
+    width:80%;
+    padding:12px;
+    font-size:18px;
+    background:#111;
+    border:1px solid #00ff00;
+    color:#00ff00;
+    outline:none;
+}
+
+button {
+    margin-top:15px;
+    padding:10px 25px;
+    font-size:18px;
+    cursor:pointer;
+    background:#00ff00;
+    color:black;
+    border:none;
+    font-weight:bold;
+}
+
+#results {
+    margin-top:30px;
+    font-size:18px;
+    text-align:left;
+    width:85%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.result {
+    padding:15px;
+    border:1px solid #00ff00;
+    margin-top:10px;
+    background:#0a0a0a;
+}
+a {
+    color:#00ff00;
+}
+</style>
+
+</head>
+<body>
+
+<h1>☠ HACKING SEARCH ENGINE ☠</h1>
+
+<input id="searchBox" placeholder="Hacking topics search karein...">
+<button onclick="search()">Search</button>
+
+<div id="results"></div>
+
+<script>
+// ---- SEARCH SYSTEM (HACKING ONLY) ---- //
+
+async function search() {
+    let query = document.getElementById("searchBox").value;
+
+    if (!query) {
+        alert("Search box khali hai!");
+        return;
+    }
+
+    // Hacking filter apply
+    query += " hacking cyber security kali linux bug bounty";
+
+    let url =
+        "https://www.googleapis.com/customsearch/v1?key=AIzaSyD9-Mx20sndFNiC4Yni3YcboNCfgRiqp6U&cx=24a2e034e40944f94&q=" +
+        encodeURIComponent(query);
+
+    let response = await fetch(url);
+    let data = await response.json();
+
+    let resultsBox = document.getElementById("results");
+    resultsBox.innerHTML = "";
+
+    if (!data.items) {
+        resultsBox.innerHTML = "<p>No results found.</p>";
+        return;
+    }
+
+    data.items.forEach(item => {
+        let div = document.createElement("div");
+        div.className = "result";
+
+        div.innerHTML =
+            "<b>" + item.title + "</b><br>" +
+            "<a href='" + item.link + "' target='_blank'>" + item.link + "</a><br><br>" +
+            item.snippet;
+
+        resultsBox.appendChild(div);
+    });
+}
+</script>
+
+</body>
+</html>
